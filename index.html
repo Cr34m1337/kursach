@@ -23,27 +23,46 @@
 
   <script type="text/babel">
 
-    class Table extends React.Component{
+  class Table extends React.Component{
       constructor(){
         super();
-        this.state = {teams: [' ','Bullya', 'Keybe', 'Kardi', 'Nword','Kenny', 'Broop','Recoon'], info: []}
+        this.state = {teams: [' ',], info: [], item:''} //max is 10
+      }
+      handleChange(e){
+        this.state.item = e.target.value;
+      }
+      addTeam(){
+        for (let i=0; i<this.state.teams.length+2; i++){
+          this.state.info.push(this.props.score);
+        };
+        this.state.teams.push(this.state.item);
+        this.setState({teams: this.state.teams});
+      }
+      delTeam(){
+        this.state.teams.pop();
+        this.setState({teams: this.state.teams});
+      }
+      delAll(){
+        this.state.teams=[];
+        this.setState({teams: this.state.teams});
       }
       render(){
-        for (let i=0; i<this.state.teams.length+1; i++){
-          this.state.info.push('');
-        };
+
         const info = this.state.info.map((item,index) => {
-          return <td key={index}>{item}</td>
+          return <td id={'element'+(index+1)} key={index}>{item}</td>
         });
+
         const horList = this.state.teams.map((item, index) => {
           return <td id={'element'+index} key={index}><h1>{item}</h1></td>
         });
+
         this.state.teams.splice(0,1);
         const vertList = this.state.teams.map((item,index) => {
-          return <tr key={index}><td><h1>{item}</h1></td>{info}</tr>
+          return <tr key={index}><td id='element0'><h1>{item}</h1></td>{info}</tr>
         });
-
-        return  <div>
+        this.state.teams.unshift(' ');
+        return  <React.Fragment>
+                <div>
                   <table>
                     <tr>{horList}
                       <td>Score</td>
@@ -52,15 +71,24 @@
                         {vertList}
                   </table>
                 </div>
+                <div className='buttons'>
+                  <input type="text" onChange={this.handleChange.bind(this)}/>
+                  <button  onClick={this.addTeam.bind(this)}>Добавить команду</button>
+                  <button onClick={this.delTeam.bind(this)}>Удалить команду</button>
+                  <button onClick={this.delAll.bind(this)}>Отчистить таблицу</button>
+                </div>
+                </React.Fragment>
+
     }
     }
     class App extends React.Component{
       constructor(){
         super();
-        this.state = {}
       }
       render(){
-              return <Table/>
+              return <React.Fragment>
+                      <Table/>
+                     </React.Fragment>
 
       }
     }

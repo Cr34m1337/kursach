@@ -27,6 +27,37 @@ td{
 .app{
   background-color: #fff;
 }
-#element0{
-  background-color: #000;
+.buttons{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 10px 0;
+
+}
+.buttons input {
+	width: 300px;
+	font-size: 13px;
+	padding: 6px 0 4px 10px;
+	border: 1px solid #cecece;
+	background: #F6F6f6;
+	border-radius: 8px;
+  transition: .2s;
+}
+.buttons input:focus{
+  color: #fff;
+  background: #212a31;
+  outline: none;
+}
+.buttons button{
+  background-color: #212a31;
+  color: #fff;
+  width: 100px;
+  height: 40px;
+  border: 1px solid #212a31;
+  transition: .2s;
+  margin-left: 10px;
+}
+.buttons button:hover{
+  background-color: #fff;
+  color: #212a31;
 }
