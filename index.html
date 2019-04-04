@@ -12,7 +12,6 @@
   <title>Tournament table</title>
 </head>
 <body>
-
   <div class="main-place">
     <div class="app">
       <div id="root">
@@ -26,28 +25,34 @@
   class Table extends React.Component{
       constructor(){
         super();
-        this.state = {teams: [' ',], info: [], item:''} //max is 10
+        this.state = {teams: [' ',], info: [], item: '', index:'0'} //max is 10
       }
       handleChange(e){
         this.state.item = e.target.value;
+        this.setState({item: this.state.item});
       }
       addTeam(){
-        for (let i=0; i<this.state.teams.length+2; i++){
+        while (this.state.index<this.state.teams.length+2){
           this.state.info.push(this.props.score);
+
+          this.setState({index: ++this.state.index});
         };
         this.state.teams.push(this.state.item);
         this.setState({teams: this.state.teams});
       }
       delTeam(){
         this.state.teams.pop();
+        this.state.info.pop();
+        this.state.index = this.state.index-1;
         this.setState({teams: this.state.teams});
       }
       delAll(){
+        this.state.index=0;
+        this.state.info= [];
         this.state.teams=[];
         this.setState({teams: this.state.teams});
       }
       render(){
-
         const info = this.state.info.map((item,index) => {
           return <td id={'element'+(index+1)} key={index}>{item}</td>
         });
@@ -72,7 +77,7 @@
                   </table>
                 </div>
                 <div className='buttons'>
-                  <input type="text" onChange={this.handleChange.bind(this)}/>
+                  <input type="login" value={this.state.item} onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
                   <button  onClick={this.addTeam.bind(this)}>Добавить команду</button>
                   <button onClick={this.delTeam.bind(this)}>Удалить команду</button>
                   <button onClick={this.delAll.bind(this)}>Отчистить таблицу</button>
