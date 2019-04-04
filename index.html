@@ -25,20 +25,26 @@
   class Table extends React.Component{
       constructor(){
         super();
-        this.state = {teams: [' ',], info: [], item: '', index:'0'} //max is 10
+        this.state = {teams: [], info: [], item: '', index:'0'} //max is 10
       }
       handleChange(e){
         this.state.item = e.target.value;
         this.setState({item: this.state.item});
       }
       addTeam(){
-        while (this.state.index<this.state.teams.length+2){
-          this.state.info.push(this.props.score);
 
-          this.setState({index: ++this.state.index});
-        };
-        this.state.teams.push(this.state.item);
-        this.setState({teams: this.state.teams});
+        if (this.state.item.length == ''){
+          alert('Введите значение!');
+        }else{
+          while (this.state.index<this.state.teams.length+2){
+            this.state.info.push(this.props.score);
+
+            this.setState({index: ++this.state.index});
+          };
+          this.state.teams.push(this.state.item);
+          this.setState({teams: this.state.teams});
+          document.getElementById('teamInput').value = "";
+        }
       }
       delTeam(){
         this.state.teams.pop();
@@ -66,6 +72,8 @@
           return <tr key={index}><td id='element0'><h1>{item}</h1></td>{info}</tr>
         });
         this.state.teams.unshift(' ');
+
+
         return  <React.Fragment>
                 <div>
                   <table>
@@ -77,8 +85,8 @@
                   </table>
                 </div>
                 <div className='buttons'>
-                  <input type="login" value={this.state.item} onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
-                  <button  onClick={this.addTeam.bind(this)}>Добавить команду</button>
+                  <input id='teamInput' type="login" onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
+                  <button onClick={this.addTeam.bind(this)}>Добавить команду</button>
                   <button onClick={this.delTeam.bind(this)}>Удалить команду</button>
                   <button onClick={this.delAll.bind(this)}>Отчистить таблицу</button>
                 </div>
