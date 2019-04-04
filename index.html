@@ -25,7 +25,7 @@
   class Table extends React.Component{
       constructor(){
         super();
-        this.state = {teams: [], info: [], item: '', index:'0'}
+        this.state = {teams: [], info: [], item: '', index:'0', } //max is 10 teams
       }
       handleChange(e){
         this.state.item = e.target.value;
@@ -40,14 +40,18 @@
         if (this.state.item.length == ''){
           alert('Введите значение!');
         }else{
-          while (this.state.index<this.state.teams.length+2){
-            this.state.info.push(this.props.score);
+          if(this.state.teams.length<=10){
+            while (this.state.index < this.state.teams.length+2){
+                this.state.info.push('');
 
-            this.setState({index: ++this.state.index});
-          };
-          this.state.teams.push(this.state.item);
-          this.setState({teams: this.state.teams});
-          document.getElementById('teamInput').value = "";
+                this.setState({index: ++this.state.index});
+              };
+              this.state.teams.push(this.state.item);
+              this.setState({teams: this.state.teams});
+              document.getElementById('teamInput').value = "";
+          }else{
+            alert('Достигнуто максимальное количество команд')
+          }
         }
       }
       delTeam(){
@@ -70,12 +74,12 @@
         });
 
         const horList = this.state.teams.map((item, index) => {
-          return <td id={'element'+index} key={index}><h1>{item}</h1></td>
+          return <td key={index}><h1>{item}</h1></td>
         });
 
         this.state.teams.splice(0,1);
         const vertList = this.state.teams.map((item,index) => {
-          return <tr key={index}><td id='element0'><h1>{item}</h1></td>{info}</tr>
+          return <tr id={'el'+index}key={index}><td><h1>{item}</h1></td>{info}</tr>
         });
         this.state.teams.unshift(' ');
 
