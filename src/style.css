@@ -1,0 +1,32 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  background:#212a31;
+  font-size
+}
+table{
+  width:100%;
+  color: #212a31;
+  border: 1px solid #212a31;
+  border-collapse: collapse;
+}
+td{
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+}
+.main-place{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+.app{
+  background-color: #fff;
+}
+#element0{
+  background-color: #000;
+}
