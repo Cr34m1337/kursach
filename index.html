@@ -31,8 +31,12 @@
         this.state.item = e.target.value;
         this.setState({item: this.state.item});
       }
+      handleKeyPress(e){
+        if(e.key == 'Enter'){
+          this.addTeam();
+        }
+      }
       addTeam(){
-
         if (this.state.item.length == ''){
           alert('Введите значение!');
         }else{
@@ -85,7 +89,7 @@
                   </table>
                 </div>
                 <div className='buttons'>
-                  <input id='teamInput' type="login" onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
+                  <input onKeyPress={this.handleKeyPress.bind(this)} id='teamInput' type="login" onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
                   <button onClick={this.addTeam.bind(this)}>Добавить команду</button>
                   <button onClick={this.delTeam.bind(this)}>Удалить команду</button>
                   <button onClick={this.delAll.bind(this)}>Отчистить таблицу</button>
