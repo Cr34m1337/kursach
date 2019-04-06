@@ -30,7 +30,7 @@
       changeScore(e){
          let score = prompt('Введите счет через пробел',  '0 0');
          let arr = score.split(' ');
-         if (arr.length<2){
+         if (arr.length!=2){
            alert('Ошибка ввода данных');
          }else{
            e.target.textContent = arr[0] + ':' + arr[1];
