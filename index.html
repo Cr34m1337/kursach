@@ -27,6 +27,15 @@
         super();
         this.state = {teams: [], info: [], item: '', index:'0', } //max is 10 teams
       }
+      changeScore(e){
+         let score = prompt('Введите счет через пробел',  '0 0');
+         let arr = score.split(' ');
+         if (arr.length<2){
+           alert('Ошибка ввода данных');
+         }else{
+           e.target.textContent = arr[0] + ':' + arr[1];
+         }
+      }
       handleChange(e){
         this.state.item = e.target.value;
         this.setState({item: this.state.item});
@@ -70,7 +79,7 @@
       }
       render(){
         const info = this.state.info.map((item,index) => {
-          return <td id={'element'+(index+1)} key={index}>{item}</td>
+          return <td onClick={this.changeScore.bind(this)} id={'element'+(index+1)} key={index}>{item}</td>
         });
 
         const horList = this.state.teams.map((item, index) => {

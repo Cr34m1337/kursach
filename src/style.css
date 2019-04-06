@@ -50,6 +50,7 @@ td{
   outline: none;
 }
 .buttons button{
+  border-radius: 10px;
   background-color: #212a31;
   color: #fff;
   width: 100px;
@@ -66,4 +67,5 @@ td{
 #el0 #element1, #el1 #element2, #el2 #element3, #el3 #element4, #el4 #element5, #el5 #element6,
 #el6 #element7, #el7 #element8, #el8 #element9, #el9 #element10{
   background-color: #000;
+  color: #000;
 }
