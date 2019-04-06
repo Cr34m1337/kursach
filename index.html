@@ -28,13 +28,15 @@
         this.state = {teams: [], info: [], item: '', index:'0', } //max is 10 teams
       }
       changeScore(e){
-         let score = prompt('Введите счет через пробел',  '0 0');
-         let arr = score.split(' ');
-         if (arr.length!=2){
-           alert('Ошибка ввода данных');
-         }else{
-           e.target.textContent = arr[0] + ':' + arr[1];
+        if (e.target.id.replace(/[^-0-9]/gim,'') < 7){
+           let score = prompt('Введите счет через пробел',  '0 0');
+           let arr = score.split(' ');
+           if (arr.length!=2){
+             alert('Ошибка ввода данных');
+           }else{
+             e.target.textContent = arr[0] + ':' + arr[1];
          }
+       }
       }
       handleChange(e){
         this.state.item = e.target.value;
