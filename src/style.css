@@ -50,6 +50,7 @@ td{
   outline: none;
 }
 .buttons button{
+  outline: none;
   border-radius: 10px;
   background-color: #212a31;
   color: #fff;

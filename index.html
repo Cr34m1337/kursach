@@ -30,12 +30,26 @@
       changeScore(e){
         if (((e.target.id.replace(/[^-0-9]/gim,'')) != (e.target.parentNode.id.replace(/[^-0-9]/gim,'')*1+1) &&
             (e.target.id.replace(/[^-0-9]/gim,'') < e.target.parentNode.childNodes.length-2))){
-              let score = prompt('Введите счет через пробел',  '0 0');
-             let arr = score.split(' ');
-             if (arr.length!=2){
-               alert('Ошибка ввода данных');
-              }else{
-               e.target.textContent = arr[0] + ':' + arr[1];
+               let score = prompt('Введите счет через пробел',  '0 0');
+                   score = score.replace(/[^-0-9]/gim, ' ');
+               let arr = score.split(' ');
+               if (arr.length != 2){
+                 alert('Ошибка ввода данных');
+                }else{
+                 if (arr[0] == ''){
+                   alert('Ошибка ввода данных');
+                 }else if(arr[1] == ''){
+                   alert('Ошибка ввода данных');
+                 }else{
+                   e.target.textContent = arr[0] + ':' + arr[1];
+                  let childId = parseInt(e.target.id.replace(/[^-0-9]/gim,''));
+                  let parentId = parseInt(e.target.parentNode.id.replace(/[^-0-9]/gim,''))+1;
+                  let newChildId = 'element' + parentId;
+                  let newParentId = 'el' + (childId - 1);
+                  let parent = document.getElementById(newParentId);
+                  let child = parent.querySelector('[id="'+ newChildId +'"]');
+                  child.textContent = arr[1] + ':' + arr[0];
+              }
             }
         }
       }
@@ -67,6 +81,16 @@
         }
       }
       delTeam(){
+
+        for (let i=1; i<this.state.teams.length; i++){
+           for (let j=0; j<this.state.teams.length-2; j++){
+              let b = document.getElementById('el'+j);
+              let a = b.querySelector('[id="element'+ i +'"]');
+              a.textContent = '';
+
+           }
+        }
+
         this.state.teams.pop();
         this.state.info.pop();
         if(this.state.index>0){
@@ -79,6 +103,17 @@
         this.state.info= [];
         this.state.teams=[];
         this.setState({teams: this.state.teams});
+      }
+      addResult(){
+        let arr123= [];
+        for (let i=0; i<this.state.index-2; i++){
+          arr123.push([]);
+          for (let j=1; j<this.state.index-1; j++){
+            let parent = document.getElementById('el'+i);
+            let child = parent.querySelector('[id="element'+ j +'"]');
+            arr123[i][j]= child.textContent;
+          }
+        }          console.log(arr123);
       }
       render(){
         const info = this.state.info.map((item,index) => {
@@ -111,6 +146,7 @@
                   <button onClick={this.addTeam.bind(this)}>Добавить команду</button>
                   <button onClick={this.delTeam.bind(this)}>Удалить команду</button>
                   <button onClick={this.delAll.bind(this)}>Отчистить таблицу</button>
+                  <button onClick={this.addResult.bind(this)}>Закончить турнир</button>
                 </div>
                 </React.Fragment>
 
