@@ -65,6 +65,14 @@ td{
   background-color: #fff;
   color: #212a31;
 }
+#end-off{
+  display: none;
+}
+#end-on{
+  width: 460px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 #el0 #element1, #el1 #element2, #el2 #element3, #el3 #element4, #el4 #element5, #el5 #element6,
 #el6 #element7, #el7 #element8, #el8 #element9, #el9 #element10{
   background-color: #000;
