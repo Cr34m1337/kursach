@@ -15,7 +15,6 @@
   <div class="main-place">
     <div class="app">
       <div id="root">
-
       </div>
     </div>
   </div>
@@ -30,7 +29,7 @@
       changeScore(e){
         if (((e.target.id.replace(/[^-0-9]/gim,'')) != (e.target.parentNode.id.replace(/[^-0-9]/gim,'')*1+1) &&
             (e.target.id.replace(/[^-0-9]/gim,'') < e.target.parentNode.childNodes.length-2))){
-               let score = prompt('Введите счет через пробел',  '0 0');
+               let score = prompt('Введите счет через пробел, двоеточие, запятую или тире',  ' ');
                    score = score.replace(/[^-0-9]/gim, ' ');
                let arr = score.split(' ');
                if (arr.length != 2){
@@ -105,15 +104,33 @@
         this.setState({teams: this.state.teams});
       }
       addResult(){
-        let arr123= [];
         for (let i=0; i<this.state.index-2; i++){
-          arr123.push([]);
+          let check=0;
+          let goalsDone = 0;
+          let goalsMiss = 0;
+          let arr = [];
+          const b = [];
           for (let j=1; j<this.state.index-1; j++){
             let parent = document.getElementById('el'+i);
             let child = parent.querySelector('[id="element'+ j +'"]');
-            arr123[i][j]= child.textContent;
+            arr = (child.textContent.split(':'));
+            if ((arr[0] || arr[1]) != undefined){
+              goalsDone+=arr[0]*1;
+              goalsMiss+=arr[1]*1;
+            }else{
+              check++;
+            }
           }
-        }          console.log(arr123);
+          if (check<2){
+            let score = document.getElementById('el'+i);
+            score.querySelector('[id="element' + (this.state.index-1)+'"]').textContent = (goalsDone + ':' + goalsMiss);
+          }else{
+
+            alert('Не все данные введены');
+            document.getElementById('element'+(this.state.index-1)).textContent='';
+            break;
+          }
+        }
       }
       render(){
         const info = this.state.info.map((item,index) => {
@@ -145,7 +162,7 @@
                   <input onKeyPress={this.handleKeyPress.bind(this)} id='teamInput' type="login" onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
                   <button onClick={this.addTeam.bind(this)}>Добавить команду</button>
                   <button onClick={this.delTeam.bind(this)}>Удалить команду</button>
-                  <button onClick={this.delAll.bind(this)}>Отчистить таблицу</button>
+                  <button onClick={this.delAll.bind(this)}>Очистить таблицу</button>
                   <button onClick={this.addResult.bind(this)}>Закончить турнир</button>
                 </div>
                 </React.Fragment>
