@@ -35,7 +35,7 @@ td{
   margin: 10px 0;
 
 }
-.buttons input {
+.buttons #teamInput{
 	width: 300px;
 	font-size: 13px;
 	padding: 6px 0 4px 10px;
@@ -44,7 +44,7 @@ td{
 	border-radius: 8px;
   transition: .2s;
 }
-.buttons input:focus{
+.buttons #teamInput:focus{
   color: #fff;
   background: #212a31;
   outline: none;
@@ -69,7 +69,7 @@ td{
   display: none;
 }
 #end-on{
-  width: 460px;
+  width: 760px;
   margin-left: 10px;
   margin-right: 10px;
 }
