@@ -102,8 +102,10 @@
         this.setState({teams: this.state.teams});
       }
       addResult(){
+        let resetCheck=0;
         const reset = document.getElementsByClassName('button');
         let totalScore = [];
+        let placeIndex=[];
         for (let i=0; i<this.state.index-2; i++){
           let total = 0;
           let check=0;
@@ -116,12 +118,11 @@
             let child = parent.querySelector('[id="element'+ j +'"]');
             arr = (child.textContent.split(':'));
             if ((arr[0] || arr[1]) != undefined){
-              if(arr[0]>=arr[1]){
-                if (arr[0]==arr[1]){
-                  total+=1;
-                  break;
-                }
+              if(arr[0]>arr[1]){
                 total+=2;
+              }
+              if (arr[0]==arr[1]){
+                total+=1;
               }
               goalsDone+=arr[0]*1;
               goalsMiss+=arr[1]*1;
@@ -134,30 +135,34 @@
             let score = document.getElementById('el'+i);
             score.querySelector('[id="element' + (this.state.index-1)+'"]').textContent = (goalsDone + ':' + goalsMiss);
           }else{
+            resetCheck++;
             alert('Не все данные введены');
             document.getElementById('element'+(this.state.index-1)).textContent='';
+
             break;
           }
         }
-      for (let i = 0; i < totalScore.length - 1; i++){
-        let max = i;
-        for (let j = i + 1; j < totalScore.length; j++){
-          if(totalScore[j] > totalScore[max]){
-            max = j;
+
+        console.log(totalScore)
+      if(resetCheck==0){
+        for (let i = 0; i < totalScore.length; ++i){
+          let place = 0;
+          for (let j=0; j <totalScore.length; ++j){
+            if(totalScore[i]<totalScore[j]){
+              place++;
+            }
           }
+          placeIndex.push(place);
         }
-        let temp = totalScore[i];
-        totalScore[i] = totalScore[max];
-        totalScore[i] = temp;
+        for (let i = 0; i < this.state.index-2 ; i++){
+          let score = document.getElementById('el'+i);
+          score.querySelector('[id="element' + (this.state.index)+'"]').textContent = (placeIndex[i]*1+1);
+        }
+        for (var i = 4; i>-1; i--){
+          reset[i].parentNode.removeChild(reset[i]);
+        }
+        document.getElementById('end-off').id ='end-on';
       }
-      for (let i = 0; i < this.state.index-2 ; i++){
-        let score = document.getElementById('el'+i);
-        score.querySelector('[id="element' + (this.state.index)+'"]').textContent = '';
-      }
-      for (var i = 3; i>-1; i--){
-        reset[i].parentNode.removeChild(reset[i]);
-      }
-      document.getElementById('end-off').id ='end-on';
     }
       endTournament(){
         window.location.reload();
@@ -190,7 +195,7 @@
                   </table>
                 </div>
                 <div className='buttons'>
-                  <input onKeyPress={this.handleKeyPress.bind(this)} id='teamInput' type="login" onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
+                  <input className='button' onKeyPress={this.handleKeyPress.bind(this)} id='teamInput' type="login" onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
                   <button className='button' onClick={this.addTeam.bind(this)}>Добавить команду</button>
                   <button className='button' onClick={this.delTeam.bind(this)}>Удалить команду</button>
                   <button className='button' onClick={this.delAll.bind(this)}>Очистить таблицу</button>
