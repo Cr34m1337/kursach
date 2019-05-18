@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="shortcut icon" href="./src/img/favicon.ico" type="image/x-icon">
+  <title>Tournament table</title>
+</head>
+<body>
+  <div class="main-place">
+    <div class="app">
+      <div id="root">
+      </div>
+    </div>
+  </div>
+
+  <script type="text/babel">
+
+  class Table extends React.Component{
+      constructor(){
+        super();
+        this.state = {teams: [], info: [], item: '', index:'0', } //max is 10 teams
+      }
+      changeScore(e){
+        if (((e.target.id.replace(/[^-0-9]/gim,'')) != (e.target.parentNode.id.replace(/[^-0-9]/gim,'')*1+1) &&
+            (e.target.id.replace(/[^-0-9]/gim,'') < e.target.parentNode.childNodes.length-2))){
+               let score = prompt('Введите счет через пробел, двоеточие, запятую или тире',  ' ');
+                   score = score.replace(/[^-0-9]/gim, ' ');
+               let arr = score.split(' ');
+               if (arr.length != 2){
+                 alert('Ошибка ввода данных');
+                }else{
+                 if (arr[0] == ''){
+                   alert('Ошибка ввода данных');
+                 }else if(arr[1] == ''){
+                   alert('Ошибка ввода данных');
+                 }else{
+                   e.target.textContent = arr[0] + ':' + arr[1];
+                  let childId = parseInt(e.target.id.replace(/[^-0-9]/gim,''));
+                  let parentId = parseInt(e.target.parentNode.id.replace(/[^-0-9]/gim,''))+1;
+                  let newChildId = 'element' + parentId;
+                  let newParentId = 'el' + (childId - 1);
+                  let parent = document.getElementById(newParentId);
+                  let child = parent.querySelector('[id="'+ newChildId +'"]');
+                  child.textContent = arr[1] + ':' + arr[0];
+              }
+            }
+        }
+      }
+      handleChange(e){
+        this.state.item = e.target.value;
+        this.setState({item: this.state.item});
+      }
+      handleKeyPress(e){
+        if(e.key == 'Enter'){
+          this.addTeam();
+        }
+      }
+      addTeam(){
+        if (this.state.item.length == ''){
+          alert('Введите значение!');
+        }else{
+          if(this.state.teams.length<=10){
+            while (this.state.index < this.state.teams.length+2){
+                this.state.info.push('');
+
+                this.setState({index: ++this.state.index});
+              };
+              this.state.teams.push(this.state.item);
+              this.setState({teams: this.state.teams});
+              document.getElementById('teamInput').value = "";
+          }else{
+            alert('Достигнуто максимальное количество команд')
+          }
+        }
+      }
+      delTeam(){
+        for (let i=1; i<this.state.teams.length+2; i++){
+           for (let j=0; j<this.state.teams.length-2; j++){
+              let b = document.getElementById('el'+j);
+              let a = b.querySelector('[id="element'+ i +'"]');
+              a.textContent = '';
+           }
+        }
+
+        this.state.teams.pop();
+        this.state.info.pop();
+        if(this.state.index>0){
+          this.state.index = this.state.index-1;
+          this.setState({teams: this.state.teams});
+        };
+      }
+      delAll(){
+        this.state.index=0;
+        this.state.info= [];
+        this.state.teams=[];
+        this.setState({teams: this.state.teams});
+      }
+      addResult(){
+        let hitCheck=[];
+        let hits=[];
+        let resetCheck=0;
+        const reset = document.getElementsByClassName('button');
+        let totalScore = [];
+        let placeIndex=[];
+        for (let i=0; i<this.state.index-2; i++){
+          let total = 0;
+          let check=0;
+          let goalsDone = 0;
+          let goalsMiss = 0;
+          let arr = [];
+          const b = [];
+          for (let j=1; j<this.state.index-1; j++){
+            let parent = document.getElementById('el'+i);
+            let child = parent.querySelector('[id="element'+ j +'"]');
+            arr = (child.textContent.split(':'));
+            if ((arr[0] || arr[1]) != undefined){
+              if(parseInt(arr[0])>parseInt(arr[1])){
+                total+=2;
+              }
+              if (parseInt(arr[0])==parseInt(arr[1])){
+                total+=1;
+              }
+              goalsDone+=arr[0]*1;
+              goalsMiss+=arr[1]*1;
+            }else{
+              check++;
+            }
+          }
+          if (check<2){
+            totalScore.push(total);
+            let score = document.getElementById('el'+i);
+            score.querySelector('[id="element' + (this.state.index-1)+'"]').textContent = ((goalsDone + ':' + goalsMiss) + ' / ' + totalScore[i]);
+          }else{
+            resetCheck++;
+            alert('Не все данные введены');
+            document.getElementById('element'+(this.state.index-1)).textContent='';
+
+            break;
+          }
+        }
+      if(resetCheck==0){
+        for (let i = 0; i < totalScore.length; ++i){
+          let place = 0;
+          let count=0;
+          for (let j=0; j <totalScore.length; ++j){
+            if(totalScore[i]<totalScore[j]){
+              place++;
+            }
+            if(totalScore[i]==totalScore[j]){
+                count++;
+            }
+            hitCheck[i]=count;
+          }
+          if (hitCheck[i]>1){
+            hits.push(i);
+          }
+          placeIndex.push(place);
+        }
+        }
+        for (let i = 0; i < this.state.index-2 ; i++){
+          let score = document.getElementById('el'+i);
+          score.querySelector('[id="element' + (this.state.index)+'"]').textContent = (placeIndex[i]*1+1);
+        }
+        for (var i = 4; i>-1; i--){
+          reset[i].parentNode.removeChild(reset[i]);
+        }
+        document.getElementById('end-off').id ='end-on';
+      }
+      endTournament(){
+        window.location.reload();
+      }
+
+      render(){
+        const info = this.state.info.map((item,index) => {
+          return <td onClick={this.changeScore.bind(this)} id={'element'+(index+1)} key={index}>{item}</td>
+        });
+
+        const horList = this.state.teams.map((item, index) => {
+          return <td key={index}><h1>{item}</h1></td>
+        });
+
+        this.state.teams.splice(0,1);
+        const vertList = this.state.teams.map((item,index) => {
+          return <tr id={'el'+index}key={index}><td><h1>{item}</h1></td>{info}</tr>
+        });
+        this.state.teams.unshift(' ');
+
+
+        return  <React.Fragment>
+                <div>
+                  <table>
+                    <tr>{horList}
+                      <td>Score/Points</td>
+                      <td>Place</td>
+                    </tr>
+                        {vertList}
+                  </table>
+                </div>
+                <div className='buttons'>
+                  <input className='button' onKeyPress={this.handleKeyPress.bind(this)} id='teamInput' type="login" onChange={this.handleChange.bind(this)} required placeholder='Название команды'/>
+                  <button className='button' onClick={this.addTeam.bind(this)}>Добавить команду</button>
+                  <button className='button' onClick={this.delTeam.bind(this)}>Удалить команду</button>
+                  <button className='button' onClick={this.delAll.bind(this)}>Очистить таблицу</button>
+                  <button className='button' onClick={this.addResult.bind(this)}>Закончить турнир</button>
+                  <button id='end-off' onClick={this.endTournament.bind(this)}>Начать заново</button>
+                </div>
+                </React.Fragment>
+
+    }
+    }
+    class App extends React.Component{
+      constructor(){
+        super();
+      }
+      render(){
+              return <React.Fragment>
+                      <Table/>
+                     </React.Fragment>
+
+      }
+    }
+
+    ReactDOM.render(
+    <App/>,
+    document.getElementById('root')
+    );
+
+  </script>
+</body>
+</html>
