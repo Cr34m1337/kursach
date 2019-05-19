@@ -9,9 +9,62 @@
   <link rel="stylesheet" href="./src/style.css">
   <link rel="shortcut icon" href="./src/img/favicon.ico" type="image/x-icon">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 <body>
+  <div id="app"></div>
+  <div class="sos">
+    <div class='round1'>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+      </ul>
+      <ul><li>3</li>
+      <li>4</li></ul>
+      <ul><li>5</li>
+      <li>6</li></ul>
+      <ul><li>7</li>
+      <li>8</li></ul>
+    </div>
+    <div class="round2">
+      <ul>
+        <li>1</li>
+        <li>2</li>
+      </ul>
+      <ul><li>3</li>
+      <li>4</li></ul>
+    </div>
+    <div class="round3">
+      <ul><li>1</li>
+      <li>2</li></ul>
+    </div>
+    <div class="winner">
+      <ul>
+        <li>WINNER</li>
+      </ul>
+    </div>
+  </div>
+  <script type='text/babel'>
+    class App extends React.Component{
+      constructor(){
+        super();
+        this.state = {};
+      }
 
+      render(){
+        return <div>
+                <h1>Выберите количество пар</h1>
+                <button>1</button>
+                <button>2</button>
+                <button>4</button>
+               </div>
+      }
+    }
+    ReactDOM.render(
+      <App/>,
+      document.getElementById('app')
+    )
+  </script>
 </body>
 </html>
 
