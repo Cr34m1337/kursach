@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+    <script>
+      mocha.setup('bdd');
+    </script>
+    <script>
+     var assert = chai.assert;
+    </script>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <script>
+      function addScoreToMassive(score) {
+        let arr = score.split(':');
+        if (arr.length == 2 && arr[1] != ''){
+            return (arr[0] +' '+ arr[1]);
+        }
+      }
+      function compareScore(scoreMas) {
+        let arr = scoreMas;
+        console.log(arr.length)
+        let totalScore = [0,0,0];
+        for (let i = 0; i < arr.length; i++) {
+          totalScore[i]-=1;
+          for (let j=0; j<arr.length; j++){
+              if (arr[i]>arr[j]){
+                totalScore[i]+=2;
+              }else if (arr[i]==arr[j]){
+                totalScore[i]++;
+            }
+          }
+        }
+        return (totalScore[0]+' '+totalScore[1]+' '+totalScore[2]);
+      }
+    </script>
+  <script src="test.js"></script>
+  <div id="mocha"></div>
+  <script>
+      mocha.run();
+    </script>
+</body>
+</html>
