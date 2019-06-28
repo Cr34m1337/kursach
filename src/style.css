@@ -2,6 +2,10 @@
   margin: 0;
   padding: 0;
 }
+body{
+  background:#212a31;
+  color: #fff;
+}
 #navbar-container{
   margin: 240px;
   display: flex;
@@ -14,15 +18,13 @@
   list-style-type: none;
   width: 240px;
 }
-#navbar li {
-  border: 3px solid #fff;
+#navbar a {
   border-radius: 15px;
   margin-top:5px;
-}
-#navbar a {
+  padding: 15px;
+  border: 3px solid #fff;
   background-color: #212a31;
   color: #fff;
-  padding: 15px;
   text-decoration: none;
   font-weight: none;
   display: block;
@@ -63,7 +65,7 @@
 }
 .text{
   border: 0px solid #fff;
-  font-size: 20px;
+  font-size: 22px;
   border-radius: 10px;
   margin-top: 10px;
   width: 400px;
@@ -73,10 +75,6 @@
   margin-right: 20px ;
   background: #fff;
 
-}
-body{
-  background:#212a31;
-  font-size
 }
 table{
   width:100%;
@@ -107,7 +105,7 @@ td{
   margin: 10px 0;
 
 }
-.buttons #teamInput{
+.buttons input {
 	width: 300px;
 	font-size: 13px;
 	padding: 6px 0 4px 10px;
@@ -116,10 +114,14 @@ td{
 	border-radius: 8px;
   transition: .2s;
 }
-.buttons #teamInput:focus{
+.buttons input:focus{
   color: #fff;
   background: #212a31;
   outline: none;
+}
+button a{
+  text-decoration: none;
+  color: #fff;
 }
 .buttons button{
   outline: none;
@@ -136,14 +138,6 @@ td{
 .buttons button:hover{
   background-color: #fff;
   color: #212a31;
-}
-#end-off{
-  display: none;
-}
-#end-on{
-  width: 760px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 #el0 #element1, #el1 #element2, #el2 #element3, #el3 #element4, #el4 #element5, #el5 #element6,
 #el6 #element7, #el7 #element8, #el8 #element9, #el9 #element10{
