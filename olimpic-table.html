@@ -10,53 +10,433 @@
   <link rel="shortcut icon" href="./src/img/favicon.ico" type="image/x-icon">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    ul input{
+      width:149px;
+      border: 1px solid #fff;
+      background: #212a31;
+      outline: none;
+      color:#fff;
+      transition: .2s;
+      text-align: center;
+      font-size: 20px;
+    }
+    ul input:hover{
+      color: #212a31;
+      background: #fff;
+      border: 1px solid #212a31;
+    }
+    ul input:focus{
+      color:#fff;
+      background: #212a31;
+      border: 1px solid #fff;
+    }
+    .build{
+      display: flex;
+      justify-content: center;
+    }
+    .sos{
+      display: flex;
+    }
+    .round2{
+      margin-top: 50px;
+    }
+    .round2 ul:nth-child(2){
+          margin-top:170px;
+    }
+    .round3{
+      margin-top: 170px;
+    }
+    .firstTable .winner{
+      margin-top: 10px;
+    }
+    .secondTable .winner{
+      margin-top: 60px;
+    }
+    .thirdTable .winner{
+      margin-top: 180px;
+    }
+    ul{
+      background: #fff;
+      color: #000;
+      margin: 50px;
+      width: 150px;
+    }
+    li{
+      list-style: none;
+      height:20px;
+      border-top: 1px solid #000;
+    }
+    .app-wrap{
+      display: flex;
+      justify-content: center;
+      height: 620px;
+      align-items: center;
+    }
+    .chooseType{
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      flex-direction: column;
+      font-size: 25px;
+    }
+    .chooseType button{
+      margin-top: 10px;
+      height: 25px;
+      border: 1px solid #212a31;
+      transition: .2s;
+    }
+    .chooseType button:hover{
+      color: #fff;
+      background:  #212a31;
+      border: 1px solid #fff;
+    }
+    .chooseType button:focus{
+      outline: none;
+    }
+    .firstTable{
+      display: none;
+    }
+    .secondTable{
+      display: none;
+    }
+    .thirdTable{
+      display: none;
+    }
+    .tableWrap{
+      display: none;
+      justify-content: center;
+      height:600px;
+      align-items: center;
+    }
+    .panel{
+      width: 500px;
+      display: none;
+      justify-content: space-around;
+    }
+    .panel button{
+      border: 1px solid #fff;
+      background: #212a31;
+      color: #fff;
+      outline: none;
+      font-size: 20px;
+      padding: 5px;
+      border-radius: 10px;
+      transition: .2s;
+    }
+    .panel button:hover{
+      background: #fff;
+      color: #212a31;
+      border: 1px solid #212a31;
+    }
+  </style>
 </head>
 <body>
-  <div id="app"></div>
-  <div class="sos">
+
+  <div class="tableWrap">
+  <div class="firstTable">
+      <div class='round1'>
+        <ul>
+          <li></li>
+          <li></li>
+          <input type="text">
+      </div>
+      <div class="winner">
+        <ul>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+  <div class="secondTable">
     <div class='round1'>
       <ul>
-        <li>1</li>
-        <li>2</li>
+        <li></li>
+        <li></li>
+        <input type="text">
       </ul>
-      <ul><li>3</li>
-      <li>4</li></ul>
-      <ul><li>5</li>
-      <li>6</li></ul>
-      <ul><li>7</li>
-      <li>8</li></ul>
+      <ul><li></li>
+      <li></li>
+    <input type="text"></ul>
     </div>
     <div class="round2">
       <ul>
-        <li>1</li>
-        <li>2</li>
+        <li></li>
+        <li></li>
+        <input type="text">
       </ul>
-      <ul><li>3</li>
-      <li>4</li></ul>
-    </div>
-    <div class="round3">
-      <ul><li>1</li>
-      <li>2</li></ul>
     </div>
     <div class="winner">
       <ul>
-        <li>WINNER</li>
+        <li></li>
       </ul>
     </div>
   </div>
+  <div class="thirdTable">
+    <div class='round1'>
+      <ul>
+        <li></li>
+        <li></li>
+        <input type="text">
+      </ul>
+      <ul><li></li>
+      <li></li><input type="text"></ul>
+      <ul><li></li>
+      <li></li><input type="text"></ul>
+      <ul><li></li>
+      <li></li><input type="text"></ul>
+    </div>
+    <div class="round2">
+      <ul>
+        <li></li>
+        <li></li>
+        <input type="text">
+      </ul>
+      <ul><li></li>
+      <li></li><input type="text"></ul>
+    </div>
+    <div class="round3">
+      <ul><li></li>
+      <li></li><input type="text"></ul>
+    </div>
+    <div class="winner">
+      <ul>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="app-wrap">
+  <div id="app"></div>
+</div>
   <script type='text/babel'>
     class App extends React.Component{
       constructor(){
         super();
-        this.state = {};
+        this.state = {teams:[], list:[], scoreList:[], check:0};
       }
-
+      createFirstTable(){
+        this.state.index = 1;
+        this.setState({index: this.state.index})
+        document.querySelector('.chooseType').style.display = 'none';
+        document.querySelector('.app-wrap').style.height = '0';
+        document.querySelector('.firstTable').style.display = 'flex';
+        document.querySelector('.tableWrap').style.display = 'flex';
+        document.querySelector('.panel').style.display = 'flex';
+      }
+      createSecondTable(){
+        this.state.index = 2;
+        this.setState({index: this.state.index})
+        document.querySelector('.chooseType').style.display = 'none';
+        document.querySelector('.app-wrap').style.height = '0';
+        document.querySelector('.secondTable').style.display = 'flex';
+        document.querySelector('.tableWrap').style.display = 'flex';
+        document.querySelector('.panel').style.display = 'flex';
+      }
+      createThirdTable(){
+        this.state.index = 3;
+        this.setState({index: this.state.index})
+        document.querySelector('.chooseType').style.display = 'none';
+        document.querySelector('.app-wrap').style.height = '0';
+        document.querySelector('.thirdTable').style.display = 'flex';
+        document.querySelector('.tableWrap').style.display = 'flex';
+        document.querySelector('.panel').style.display = 'flex';
+      }
+      goBack(){
+        location.href = 'index.html'
+      }
+      finishRound(){
+        switch (this.state.index) {
+          case 1:
+          if(this.state.list[0].innerHTML != '' && this.state.list[1].innerHTML != ''){
+            let score = this.state.scoreList[0].value.split(':');
+            if (score.length == 2 && score[0] > 0 && score[1] > 0 && parseInt(score[0]) != NaN && parseInt(score[1]) != NaN){
+              if (parseInt(score[0])<parseInt(score[1])) {
+                document.querySelector('.winner li').innerHTML = this.state.list[1].innerHTML;
+                alert(`Победил ${this.state.list[1].innerHTML}`)
+              }else{
+                document.querySelector('.winner li').innerHTML = this.state.list[0].innerHTML;
+                alert(`Победил ${this.state.list[0].innerHTML}`)
+              }
+              document.querySelectorAll('.panel button')[0].style.display = 'none';
+            }else{
+              alert('Введите верное значение');
+            }
+          }else{
+            alert('Введите названия команд')
+          }
+            break;
+          case 2:
+          if (this.state.check == 0){
+            if(this.state.list[0].innerHTML.innerHTML != '' && this.state.list[1].innerHTML.innerHTML != '' && this.state.list[2].innerHTML.innerHTML != '' && this.state.list[3].innerHTML != ''){
+              this.setState({check: this.state.check})
+              let firstRoundScore1 = this.state.scoreList[0].value.split(':')
+              let firstRoundScore2 = this.state.scoreList[1].value.split(':')
+              if (firstRoundScore1.length == 2 && firstRoundScore2.length == 2){
+              this.state.check=1;
+              this.setState({check: this.state.check})
+                if (parseInt(firstRoundScore1[0])<parseInt(firstRoundScore1[1])){
+                  document.querySelectorAll('.round2 ul li')[0].innerHTML = this.state.list[1].innerHTML;
+                }else{
+                  document.querySelectorAll('.round2 ul li')[0].innerHTML =this.state.list[0].innerHTML;
+                }
+                if(parseInt(firstRoundScore2[0])<parseInt(firstRoundScore2[1])){
+                  document.querySelectorAll('.round2 ul li')[1].innerHTML = this.state.list[3].innerHTML;
+                }else{
+                  document.querySelectorAll('.round2 ul li')[1].innerHTML = this.state.list[2].innerHTML;
+                }
+              }
+            }
+          }else if(this.state.check == 1){
+              if (document.querySelectorAll('round2 ul li')[0] != '' && document.querySelectorAll('round2 ul li')[1] != ''){
+                let secondRoundScore2 = this.state.scoreList[2].value.split(':')
+                if (secondRoundScore2.length == 2){
+                  if (parseInt(secondRoundScore2[0])<parseInt(secondRoundScore2[1])) {
+                    document.querySelectorAll('.winner ul li')[1].innerHTML = document.querySelectorAll('.round2 ul li')[1].innerHTML;
+                    alert('Победил '+ document.querySelectorAll('.round2 ul li')[1].innerHTML)
+                  }else{
+                    document.querySelectorAll('.winner ul li')[1].innerHTML = document.querySelectorAll('.round2 ul li')[0].innerHTML;
+                    alert('Победил '+ document.querySelectorAll('.round2 ul li')[0].innerHTML)
+                  }
+                  document.querySelectorAll('.panel button')[0].style.display = 'none';
+                }else{
+                  alert('Введите верное значение');
+              }
+            }
+          }
+        break;
+        case 3:
+        if (this.state.check == 0){
+          if (this.state.list[0].innerHTML != '' && this.state.list[1].innerHTML != '' && this.state.list[2].innerHTML && this.state.list[3].innerHTML != '' && this.state.list[4].innerHTML != ''
+          && this.state.list[5].innerHTML != ''  && this.state.list[6].innerHTML != '' && this.state.list[7].innerHTML){
+            let firstRoundScore1 = this.state.scoreList[0].value.split(':')
+            let firstRoundScore2 = this.state.scoreList[1].value.split(':')
+            let firstRoundScore3 = this.state.scoreList[2].value.split(':')
+            let firstRoundScore4 = this.state.scoreList[3].value.split(':')
+            let checkMark = 0;
+            let checked1 = true;
+            let checked2 = true;
+            let checked3 = true;
+            let checked4 = true;
+            if (firstRoundScore1.length == 2 && firstRoundScore2.length == 2 && firstRoundScore3.length == 2 && firstRoundScore4.length == 2 && parseInt(firstRoundScore1[0])!=parseInt(firstRoundScore1[1])
+            && parseInt(firstRoundScore2[0])!= parseInt(firstRoundScore2[1]) && parseInt(firstRoundScore3[0])!=parseInt(firstRoundScore3[1]) && parseInt(firstRoundScore4[0])!=parseInt(firstRoundScore4[1])){
+              this.state.check = 1;
+              this.setState({check: this.state.check})
+              if (parseInt(firstRoundScore1[0])<parseInt(firstRoundScore1[1])){
+                document.querySelectorAll('.round2 ul li')[2].innerHTML = this.state.list[1].innerHTML;
+              }else{
+                document.querySelectorAll('.round2 ul li')[2].innerHTML =this.state.list[0].innerHTML;
+              }
+              if(parseInt(firstRoundScore2[0])<parseInt(firstRoundScore2[1])){
+                document.querySelectorAll('.round2 ul li')[3].innerHTML = this.state.list[3].innerHTML;
+              }else{
+                document.querySelectorAll('.round2 ul li')[3].innerHTML = this.state.list[2].innerHTML;
+              }
+              if(parseInt(firstRoundScore3[0])<parseInt(firstRoundScore3[1])){
+                document.querySelectorAll('.round2 ul li')[4].innerHTML = this.state.list[5].innerHTML;
+              }else{
+                document.querySelectorAll('.round2 ul li')[4].innerHTML = this.state.list[4].innerHTML;
+              }
+              if(parseInt(firstRoundScore4[0])<parseInt(firstRoundScore4[1])){
+                document.querySelectorAll('.round2 ul li')[5].innerHTML = this.state.list[7].innerHTML;
+              }else{
+                document.querySelectorAll('.round2 ul li')[5].innerHTML = this.state.list[6].innerHTML;
+              }
+            }else{
+              alert('Введите корректный счет')
+              console.log(this.state.check)
+            }
+          }else{
+            alert('Введите названия команд')
+          }
+        }else if(this.state.check == 1){
+          console.log(this.state)
+          let secondRoundScore1 = this.state.scoreList[4].value.split(':')
+          let secondRoundScore2 = this.state.scoreList[5].value.split(':')
+          if (document.querySelectorAll('.round2 ul li')[2].innerHTML != '' && document.querySelectorAll('.round2 ul li')[3].innerHTML != ''
+          && document.querySelectorAll('.round2 ul li')[4].innerHTML && document.querySelectorAll('.round2 ul li')[5].innerHTML && parseInt(secondRoundScore1[0])!=parseInt(secondRoundScore1[1])
+          && parseInt(secondRoundScore2[0])!= parseInt(secondRoundScore2[1])){
+            let secondRoundScore1 = this.state.scoreList[11].value.split(':')
+            let secondRoundScore2 = this.state.scoreList[12].value.split(':')
+            if (secondRoundScore1.length == 2 && secondRoundScore2.length == 2){
+            this.state.check = 2;
+            this.setState({check: this.state.check})
+              if (parseInt(secondRoundScore1[0])<parseInt(secondRoundScore1[1])){
+                document.querySelectorAll('.round3 ul li')[0].innerHTML = document.querySelectorAll('.round2 ul li')[3].innerHTML;
+              }else{
+                document.querySelectorAll('.round3 ul li')[0].innerHTML = document.querySelectorAll('.round2 ul li')[2].innerHTML;
+              }
+              if(parseInt(secondRoundScore2[0])<parseInt(secondRoundScore2[1])){
+                document.querySelectorAll('.round3 ul li')[1].innerHTML = document.querySelectorAll('.round2 ul li')[5].innerHTML;
+              }else{
+                document.querySelectorAll('.round3 ul li')[1].innerHTML = document.querySelectorAll('.round2 ul li')[4].innerHTML;
+              }
+            }
+          }
+        }else if(this.state.check == 2){
+          if(document.querySelectorAll('.round3 ul li')[0] != '' && document.querySelectorAll('.round3 ul li')[1] != ''){
+            let thirdRoundScore1 = this.state.scoreList[6].value.split(':')
+            if (thirdRoundScore1.length == 2){
+              if (parseInt(thirdRoundScore1[0])<parseInt(thirdRoundScore1[1])) {
+                document.querySelectorAll('.winner ul li')[2].innerHTML = document.querySelectorAll('.round3 ul li')[1].innerHTML;
+                alert('Победил '+ document.querySelectorAll('.round3 ul li')[1].innerHTML)
+              }else{
+                document.querySelectorAll('.winner ul li')[2].innerHTML = document.querySelectorAll('.round3 ul li')[0].innerHTML;
+                alert('Победил '+ document.querySelectorAll('.round3 ul li')[0].innerHTML)
+              }
+              document.querySelectorAll('.panel button')[0].style.display = 'none';
+            }else{
+              alert('Введите верное значение');
+          }
+          }
+        }
+      }
+    }
       render(){
+        switch (this.state.index) {
+          case 1:
+            for(let i=0; i<2; i++){
+              this.state.list.push(document.querySelectorAll('.round1 li')[i]);
+              document.querySelectorAll('.round1 li')[i].setAttribute('onclick', 'this.innerHTML = prompt("Введите название команды")')
+            }
+            for(let i=0; i<1; i++){
+              this.state.scoreList.push(document.querySelectorAll('ul input')[i]);
+              document.querySelectorAll('ul input')[i].setAttribute('placeholder', '2:1');
+            }
+          break;
+          case 2:
+           for(let i=2; i<6; i++){
+             this.state.list.push(document.querySelectorAll('.round1 li')[i]);
+             document.querySelectorAll('.round1 li')[i].setAttribute('onclick', 'this.innerHTML = prompt("Введите название команды")');
+
+           }
+           for(let i=1; i<4; i++){
+             this.state.scoreList.push(document.querySelectorAll('ul input')[i]);
+             document.querySelectorAll('ul input')[i].setAttribute('placeholder', '2:1');
+           }
+          break;
+          case 3:
+           for(let i=6; i<14;i++){
+             this.state.list.push(document.querySelectorAll('.round1 li')[i]);
+             document.querySelectorAll('.round1 li')[i].setAttribute('onclick', 'this.innerHTML = prompt("Введите название команды")');
+           }
+           for(let i=4; i<11;i++){
+             this.state.scoreList.push(document.querySelectorAll('ul input')[i]);
+             document.querySelectorAll('ul input')[i].setAttribute('placeholder', '2:1');
+           }
+          break;
+        }
         return <div>
-                <h1>Выберите количество пар</h1>
-                <button>1</button>
-                <button>2</button>
-                <button>4</button>
+                  <div className='chooseType'>
+                    <p>Выберите количество пар команд</p><br/>
+                    <button onClick={this.createFirstTable.bind(this)}>1</button>
+                    <button onClick={this.createSecondTable.bind(this)}>2</button>
+                    <button onClick={this.createThirdTable.bind(this)}>4</button>
+                 </div>
+                 <div className='panel'>
+                    <button onClick={this.finishRound.bind(this)}>Завершить ранд</button>
+                    <button  onClick={this.goBack.bind(this)}>Вернуться в меню</button>
+                 </div>
                </div>
       }
     }
@@ -67,4 +447,3 @@
   </script>
 </body>
 </html>
-
